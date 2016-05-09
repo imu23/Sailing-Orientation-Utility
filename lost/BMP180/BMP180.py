@@ -21,6 +21,8 @@
 import logging
 import time
 
+from Adafruit_I2C import Adafruit_I2C
+
 
 # BMP180 default address.
 BMP180_I2CADDR           = 0x77
@@ -64,25 +66,23 @@ class BMP180(object):
             raise ValueError('Unexpected mode value {0}.  Set mode to one of BMP180_ULTRALOWPOWER, BMP180_STANDARD, BMP180_HIGHRES, or BMP180_ULTRAHIGHRES'.format(mode))
         self._mode = mode
         # Create I2C device.
-        if i2c is None:
-            import Adafruit_GPIO.I2C as I2C
-            i2c = I2C
-        self._device = i2c.get_i2c_device(address, **kwargs)
+        
+        self._device = Adafruit_I2C(BMP180_I2CADDR, -1, False)
         # Load calibration values.
         self._load_calibration()
 
     def _load_calibration(self):
-        self.cal_AC1 = self._device.readS16BE(BMP180_CAL_AC1)   # INT16
-        self.cal_AC2 = self._device.readS16BE(BMP180_CAL_AC2)   # INT16
-        self.cal_AC3 = self._device.readS16BE(BMP180_CAL_AC3)   # INT16
-        self.cal_AC4 = self._device.readU16BE(BMP180_CAL_AC4)   # UINT16
-        self.cal_AC5 = self._device.readU16BE(BMP180_CAL_AC5)   # UINT16
-        self.cal_AC6 = self._device.readU16BE(BMP180_CAL_AC6)   # UINT16
-        self.cal_B1 = self._device.readS16BE(BMP180_CAL_B1)     # INT16
-        self.cal_B2 = self._device.readS16BE(BMP180_CAL_B2)     # INT16
-        self.cal_MB = self._device.readS16BE(BMP180_CAL_MB)     # INT16
-        self.cal_MC = self._device.readS16BE(BMP180_CAL_MC)     # INT16
-        self.cal_MD = self._device.readS16BE(BMP180_CAL_MD)     # INT16
+        self.cal_AC1 = self._device.readS16(BMP180_CAL_AC1)   # INT16
+        self.cal_AC2 = self._device.readS16(BMP180_CAL_AC2)   # INT16
+        self.cal_AC3 = self._device.readS16(BMP180_CAL_AC3)   # INT16
+        self.cal_AC4 = self._device.readU16(BMP180_CAL_AC4)   # UINT16
+        self.cal_AC5 = self._device.readU16(BMP180_CAL_AC5)   # UINT16
+        self.cal_AC6 = self._device.readU16(BMP180_CAL_AC6)   # UINT16
+        self.cal_B1 = self._device.readS16(BMP180_CAL_B1)     # INT16
+        self.cal_B2 = self._device.readS16(BMP180_CAL_B2)     # INT16
+        self.cal_MB = self._device.readS16(BMP180_CAL_MB)     # INT16
+        self.cal_MC = self._device.readS16(BMP180_CAL_MC)     # INT16
+        self.cal_MD = self._device.readS16(BMP180_CAL_MD)     # INT16
         self._logger.debug('AC1 = {0:6d}'.format(self.cal_AC1))
         self._logger.debug('AC2 = {0:6d}'.format(self.cal_AC2))
         self._logger.debug('AC3 = {0:6d}'.format(self.cal_AC3))
@@ -114,7 +114,7 @@ class BMP180(object):
         """Reads the raw (uncompensated) temperature from the sensor."""
         self._device.write8(BMP180_CONTROL, BMP180_READTEMPCMD)
         time.sleep(0.005)  # Wait 5ms
-        raw = self._device.readU16BE(BMP180_TEMPDATA)
+        raw = self._device.readU16(BMP180_TEMPDATA)
         self._logger.debug('Raw temp 0x{0:X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
 
@@ -279,4 +279,9 @@ if __name__ == '__main__':
         pr = b.read_pressure()
         print "pres: ", pr
         print "temp: ", te
+        
+        print ""
+        alt = b.read_altitude()
+        print ""
+        print "alt: ", alt
         sleep(sleeptime)

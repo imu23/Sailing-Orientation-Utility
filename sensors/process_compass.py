@@ -1,17 +1,16 @@
 ## Converting Magnetometer Data
-#	EHH
 
 import math
     
 def getMag(accel, mag):
     
 	# NEED TO CALIBRATE TO GET THESE ACTUAL VALUES
-	magMinX = -544
-	magMaxX = 544
-	magMinY = -544
-	magMaxY = 544
-	magMinZ = -544
-	magMaxZ = 544
+	magMinX = -1035
+	magMaxX = 176
+	magMinY = -502
+	magMaxY = 763
+	magMinZ = -695
+	magMaxZ = 629
 
 	# normalized acceleration values:
 	den = float( accel[0]*accel[0] + accel[1]*accel[1] + accel[2]*accel[2] )

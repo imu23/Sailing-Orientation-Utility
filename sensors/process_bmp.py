@@ -1,5 +1,4 @@
 ## Processing BMP180 Data
-#   EHH
 
 from Adafruit_I2C import Adafruit_I2C
 
@@ -105,6 +104,9 @@ if __name__ == '__main__':
 	b.calibrate(pr.press)
 	sleeptime = 0.5
 	
+	print dir()
+	import sys
+	print sys.path
 	while True:
 		system('clear')
 		print b.procTemp(te.read())

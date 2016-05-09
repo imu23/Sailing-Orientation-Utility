@@ -1,5 +1,4 @@
 ## Accelerometer Raw Data Collector
-#	EHH
 
 from Adafruit_I2C import Adafruit_I2C
 
@@ -34,6 +33,7 @@ class Accelerometer(Adafruit_I2C):
 
     def read(self):
         # Read the accelerometer
+        res = [0, 0, 0]
         list = self.accel.readList(
           self.LSM303_REGISTER_ACCEL_OUT_X_L_A | 0x80, 6)
         res = [ self.accel12(list, 0),

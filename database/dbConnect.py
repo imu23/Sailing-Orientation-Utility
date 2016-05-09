@@ -5,6 +5,8 @@ def connect():
     db = MySQLdb.connect('localhost', 'main', 'password', 'logs')
     if db is None:
         print("Error: Unable to connect to the database")
+    else:
+		print("Connected to database")
     return db
 
 #curs = connect()

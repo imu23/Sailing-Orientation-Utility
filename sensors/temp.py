@@ -1,5 +1,4 @@
 ## Temperature Raw Data Collector
-#    EHH
 
 from Adafruit_I2C import Adafruit_I2C
 import time
@@ -41,7 +40,7 @@ class Temperature(Adafruit_I2C):
     def read(self):
         # Read the temperature
         # Enable the temperature sensor
-        
+        res = [0, 0, 0]
         self.temp.write8(self.BMP180_CONTROL, 0x2E)
         # Have to sleep 5 ms before reading
         time.sleep(0.005)

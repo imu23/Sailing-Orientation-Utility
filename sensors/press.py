@@ -1,5 +1,4 @@
 ## Pressure Raw Data Collector
-#    EHH
 
 from Adafruit_I2C import Adafruit_I2C
 import time
@@ -31,6 +30,7 @@ class Pressure(Adafruit_I2C):
         return n if n < 32768 else n - 65536 # 2's complement signed
         
     def read(self, mode=1):
+        res = 0
         # Read the pressure
         self.press.write8(self.BMP180_CONTROL, 0x34)
         # have to wait depending on mode before reading

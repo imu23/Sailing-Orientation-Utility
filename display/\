@@ -1,0 +1,14 @@
+from guiTest import *
+from Tkinter import *
+from ttk import Frame, Button, Style
+
+def main():
+    root = Tk()
+    gui = testGui(root)
+    root.geometry("300x200+300+300")
+
+    root.mainloop() 
+    root.setAcc("hi i am poop")
+
+if __name__ == '__main__':
+    main()

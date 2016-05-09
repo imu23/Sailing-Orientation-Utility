@@ -24,6 +24,7 @@ class Gyroscope(Adafruit_I2C):
     
     # Read the gyroscope
     def read(self):
+        res = [0, 0, 0]
         list = self.gyro.readList(self.L3GD20_REGISTER_GYRO_OUT_X_L | 0x80, 6)
         res = [self.gyro16(list, 0),
                    self.gyro16(list, 2),

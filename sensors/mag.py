@@ -1,5 +1,4 @@
 ## Magnetometer Raw Data Collector
-#	 EHH
 
 from Adafruit_I2C import Adafruit_I2C
 
@@ -33,6 +32,7 @@ class Magnetometer(Adafruit_I2C):
         return n if n < 32768 else n - 65536 # 2's complement signed
         
     def read(self):
+        res = [0, 0, 0]
 		# Read the magnetometer
         list = self.mag.readList(self.LSM303_REGISTER_MAG_OUT_X_H_M, 6)
         res = [ self.mag16(list, 0),
@@ -60,6 +60,5 @@ if __name__ == '__main__':
 		raw = mag.read()
 		m = getMag(accel.read(), raw)
 		print raw
-		#print m
 		
 		sleep(sleeptime)
