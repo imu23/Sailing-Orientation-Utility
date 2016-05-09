@@ -1,0 +1,2 @@
+GpsPoller
+Creates a GpsPoller class which creates a gpsd variable.  The gpsd then starts the gps which starts the steam of info.  Within the GpsPoller class are accessor methods such as getLat and getLong which simply return a specific data value from the GPS.  An important method within the GpsPoller class is getNext, which grabs the next batch of available data from the GPS so when the accessor methods are called, new data is available. Also when the GpsPoller class is created, a thread is also made for it.
